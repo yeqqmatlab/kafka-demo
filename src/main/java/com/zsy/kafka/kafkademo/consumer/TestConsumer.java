@@ -35,7 +35,7 @@ public class TestConsumer {
     }*/
 
     /**
-     * 手动提交offset ,异常消息回滚
+     * 手动提交offset ,出现异常,offset不提交,消息不会丢失。
      */
     @KafkaListener(id="009", topics = "topic_01")
     public void consumerListener(ConsumerRecord<?, ?> record, Acknowledgment ack){
