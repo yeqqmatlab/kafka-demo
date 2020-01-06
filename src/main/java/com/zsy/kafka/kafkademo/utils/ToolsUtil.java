@@ -11,7 +11,7 @@ public class ToolsUtil {
 
     public synchronized static Float getRandFloat() {
         Random rand = new Random();
-        float fee = rand.nextFloat();
+        float fee = rand.nextFloat()*100;
         return fee;
     }
 }
