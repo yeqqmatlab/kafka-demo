@@ -1,5 +1,7 @@
 package com.zsy.kafka.kafkademo.producer;
 
+import com.alibaba.fastjson.JSON;
+import com.zsy.kafka.kafkademo.message.MsgObj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +17,18 @@ public class TestKafkaProducerController {
 
     @RequestMapping("send/{topic}/{msg}")
     public String send(@PathVariable("topic") String topic, @PathVariable("msg") String msg){
+
+        /*MsgObj msg1 = new MsgObj();
+        msg1.setCode("001");
+        msg1.setMsg(msg);
+        String msgStr = JSON.toJSONString(msg1);
+        System.out.println("msgStr-->"+msgStr);*/
+        //kafkaTemplate.send(topic, msg);
+        //key相同，则数据在同一个partition中
         kafkaTemplate.send(topic, msg);
+        kafkaTemplate.send(topic,0,"000", msg);
+        kafkaTemplate.send(topic,1,"001", msg+"b");
+
         return "success";
     }
 
