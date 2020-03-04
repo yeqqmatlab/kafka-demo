@@ -25,9 +25,9 @@ public class TestKafkaProducerController {
         System.out.println("msgStr-->"+msgStr);*/
         //kafkaTemplate.send(topic, msg);
         //key相同，则数据在同一个partition中
+        //kafkaTemplate.send(topic,0,"000", msg);
+        //kafkaTemplate.send(topic,1,"001", msg);
         kafkaTemplate.send(topic, msg);
-        kafkaTemplate.send(topic,0,"000", msg);
-        kafkaTemplate.send(topic,1,"001", msg+"b");
 
         return "success";
     }

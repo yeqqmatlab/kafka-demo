@@ -67,12 +67,18 @@ public class TestConsumer {
 
     }*/
 
-   /* @KafkaListener(topicPartitions = {@TopicPartition(topic = "topic_03",partitions = {"1"})})
+    /***
+     * 手动为消费 指定消费对应的分区 assign方式
+     * 默认是自动subscribe分配分区,同时进行“自动”和“手动”的分区分配是会互相影响的
+     * @param record
+     * @param ack
+     */
+    /*@KafkaListener(id="010", topicPartitions = {@TopicPartition(topic = "topic_03",partitions = {"1"})},groupId = "test-group-02")
     public void consumerListener010(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
             //int k = 1/0;
-            System.out.printf("010test-group-01:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            System.out.printf("010test-group-02:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
             ack.acknowledge();
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,7 +86,19 @@ public class TestConsumer {
 
     }*/
 
-    @KafkaListener(id="011",groupId="test-group-01", topics = "topic_03")
+    /*@KafkaListener(id="013", topicPartitions = {@TopicPartition(topic = "topic_03",partitions = {"0","2","3","4"})},groupId = "test-group-02")
+    public void consumerListener013(ConsumerRecord<?, ?> record, Acknowledgment ack){
+
+        try {
+            //int k = 1/0;
+            System.out.printf("013test-group-01:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            ack.acknowledge();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    /*@KafkaListener(id="011",groupId="test-group-01", topics = "topic_03")
     public void consumerListener011(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
@@ -91,9 +109,9 @@ public class TestConsumer {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
-    /*@KafkaListener(id="012",groupId="test-group-02", topics = "topic_03")
+    @KafkaListener(id="012",groupId="test-group-02", topics = "topic_03")
     public void consumerListener012(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
@@ -104,11 +122,7 @@ public class TestConsumer {
             e.printStackTrace();
         }
 
-    }*/
-
-
-
-
+    }
 
 
 }
