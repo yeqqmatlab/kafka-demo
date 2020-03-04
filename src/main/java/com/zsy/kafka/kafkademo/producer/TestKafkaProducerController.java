@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.zsy.kafka.kafkademo.message.MsgObj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
+import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +16,9 @@ public class TestKafkaProducerController {
 
     @Autowired
     private KafkaTemplate kafkaTemplate;
+
+    @Autowired
+    private ReplyingKafkaTemplate replyingKafkaTemplate;
 
     @RequestMapping("send/{topic}/{msg}")
     public String send(@PathVariable("topic") String topic, @PathVariable("msg") String msg){
@@ -27,7 +32,12 @@ public class TestKafkaProducerController {
         //key相同，则数据在同一个partition中
         //kafkaTemplate.send(topic,0,"000", msg);
         //kafkaTemplate.send(topic,1,"001", msg);
+        //普通发送消息
         kafkaTemplate.send(topic, msg);
+
+        //同步接收消费者的回复信息
+        ListenableFuture send = replyingKafkaTemplate.send(topic, msg);
+
 
         return "success";
     }
