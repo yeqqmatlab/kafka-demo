@@ -17,8 +17,8 @@ public class TestKafkaProducerController {
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
-    @Autowired
-    private ReplyingKafkaTemplate replyingKafkaTemplate;
+    /*@Autowired
+    private ReplyingKafkaTemplate replyingKafkaTemplate;*/
 
     @RequestMapping("send/{topic}/{msg}")
     public String send(@PathVariable("topic") String topic, @PathVariable("msg") String msg){
@@ -36,9 +36,9 @@ public class TestKafkaProducerController {
         kafkaTemplate.send(topic, msg);
 
         //同步接收消费者的回复信息
-        ListenableFuture send = replyingKafkaTemplate.send(topic, msg);
+        //ListenableFuture send = replyingKafkaTemplate.send(topic, msg);
 
-
+        //System.out.println("send-->"+send);
         return "success";
     }
 
