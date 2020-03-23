@@ -98,7 +98,7 @@ public class TestConsumer {
         }
     }*/
 
-    @KafkaListener(id="011",groupId="test-group-01", topics = "topic_03")
+    /*@KafkaListener(id="011",groupId="test-group-01", topics = "topic_03")
     public void consumerListener011(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
@@ -107,23 +107,29 @@ public class TestConsumer {
             //手动提交
             ack.acknowledge();
         } catch (Exception e) {
+
             e.printStackTrace();
         }
 
-    }
+    }*/
 
-    @KafkaListener(id="012",groupId="test-group-02", topics = "topic_03")
+    /*@KafkaListener(groupId="test-group-02", topics = "topic_03")
     public void consumerListener012(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
             //int k = 1/0;
             System.out.printf("012test-group-02:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            String value = (String)record.value();
+            System.out.println("value--2->"+value);
+            //Integer m = Integer.valueOf(value);
+
             ack.acknowledge();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
+    }*/
+
 
 
 }
