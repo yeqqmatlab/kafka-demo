@@ -19,7 +19,7 @@ public class MessageProducer {
 
     public void send(Message payMessage) {
         String msg = JSON.toJSONString(payMessage);
-        kafkaTemplate.send(TopicConst.PAY_TOPIC, msg);
+        kafkaTemplate.send(TopicConst.PAY_TOPIC2, msg);
         logger.info("messageProducer is: " + msg );
 
     }

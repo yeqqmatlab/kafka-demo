@@ -130,6 +130,21 @@ public class TestConsumer {
 
     }*/
 
+    /*@KafkaListener(groupId="test-group-01", topicPattern = "spring.*")
+    public void consumerListener016(ConsumerRecord<?, ?> record, Acknowledgment ack){
+
+        try {
+
+            System.out.printf("topic--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            String value = (String)record.value();
+            System.out.println("value--2->"+value);
+            ack.acknowledge();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }*/
+
 
 
 }
