@@ -98,7 +98,7 @@ public class TestConsumer {
         }
     }*/
 
-    /*@KafkaListener(id="011",groupId="test-group-01", topics = "topic_03")
+    @KafkaListener(id="011",groupId="test-group-01", topics = "topic_05")
     public void consumerListener011(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
@@ -111,7 +111,7 @@ public class TestConsumer {
             e.printStackTrace();
         }
 
-    }*/
+    }
 
     /*@KafkaListener(groupId="test-group-02", topics = "topic_03")
     public void consumerListener012(ConsumerRecord<?, ?> record, Acknowledgment ack){
