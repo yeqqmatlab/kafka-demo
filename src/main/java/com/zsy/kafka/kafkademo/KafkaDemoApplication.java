@@ -14,19 +14,15 @@ public class KafkaDemoApplication {
 
         ApplicationContext applicationContext = SpringApplication.run(KafkaDemoApplication.class, args);
 
-        /*MessageProducer producer = applicationContext.getBean(MessageProducer.class);
+        MessageProducer producer = applicationContext.getBean(MessageProducer.class);
         while (true){
             Message message = new Message();
             message.setFee(ToolsUtil.getRandFloat());
             message.setOrderCode(ToolsUtil.getNextCode());
             message.setSendTime(System.currentTimeMillis());
             producer.send(message);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }*/
+
+        }
     }
 
 }

@@ -43,10 +43,11 @@ public class TestConsumer {
         System.out.printf("test-group-01:topic_02--->"+"topic = %s, offset = %d, value = %s \n", record.topic(), record.offset(), record.value());
     }*/
 
-    /*@KafkaListener(topics = TopicConst.TOPIC_01)
-    public void onMessage(String message) {
+    /*@KafkaListener(topics = TopicConst.PAY_TOPIC)
+    public void onMessage(String message) throws InterruptedException {
+        Thread.sleep(1000*1);
         MsgObj msg = JSON.parseObject(message, MsgObj.class);
-        logger.info("messageConsumer is: " + message );
+        //logger.info("messageConsumer is: " + message );
         System.out.println("code-->"+msg.getCode());
         System.out.println("code-->"+msg.getMsg());
     }*/
@@ -54,18 +55,16 @@ public class TestConsumer {
     /**
      * 手动提交offset ,出现异常,offset不提交,消息不会丢失。
      */
-    /*@KafkaListener(id="009",groupId="test-group-01", topics = "topic_03")
-    public void consumerListener(ConsumerRecord<?, ?> record, Acknowledgment ack){
-
+    @KafkaListener(id="009",groupId="test-group-01", topics = TopicConst.PAY_TOPIC3)
+    public void consumerListener(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
         try {
-            //int k = 1/0;
-            System.out.printf("009test-group-01:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            System.out.printf("test-group-01:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
             ack.acknowledge();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }*/
+    }
 
     /***
      * 手动为消费 指定消费对应的分区 assign方式
@@ -98,12 +97,12 @@ public class TestConsumer {
         }
     }*/
 
-    @KafkaListener(id="011",groupId="test-group-01", topics = "topic_05")
+    /*@KafkaListener(id="011",groupId="test-group-01", topics = "topic_06",concurrency = "2")
     public void consumerListener011(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
-            //int k = 1/0;
-            System.out.printf("011test-group-01:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+
+            System.out.printf("test-group-01:topic_06--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
             //手动提交
             ack.acknowledge();
         } catch (Exception e) {
@@ -111,16 +110,16 @@ public class TestConsumer {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
-    /*@KafkaListener(groupId="test-group-02", topics = "topic_03")
+   /* @KafkaListener(groupId="test-group-02", topics = "topic_07")
     public void consumerListener012(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
             //int k = 1/0;
-            System.out.printf("012test-group-02:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            System.out.printf("test-group-02:topic_07--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
             String value = (String)record.value();
-            System.out.println("value--2->"+value);
+            System.out.println("value--->"+value);
             //Integer m = Integer.valueOf(value);
 
             ack.acknowledge();
