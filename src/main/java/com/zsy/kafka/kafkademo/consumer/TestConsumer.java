@@ -17,6 +17,8 @@ public class TestConsumer {
 
     private static Logger logger = LoggerFactory.getLogger(TestConsumer.class);
 
+    public  int count = 0;
+
     /*@KafkaListener(id="001", groupId="test-group-01",topics = "topic_01")
     public void listenTestGroup01Topic01 (ConsumerRecord<?, ?> record) throws Exception {
         //int i = 1 / 0;
@@ -55,8 +57,71 @@ public class TestConsumer {
     /**
      * 手动提交offset ,出现异常,offset不提交,消息不会丢失。
      */
-    @KafkaListener(id="009",groupId="test-group-01", topics = TopicConst.PAY_TOPIC3)
-    public void consumerListener(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
+    /*@KafkaListener(id="009",groupId="test-group-01", topics = TopicConst.PAY_TOPIC3)
+    public void consumerListener3(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
+        try {
+            System.out.printf("test-group-01:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            Thread.sleep(1000);
+            ack.acknowledge();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }*/
+
+    /*@KafkaListener(id="100",groupId="test-group-01", topics = TopicConst.PAY_TOPIC20,concurrency = "20",properties= {"max.poll.interval.ms = 600000","session.timeout.ms = 15000","heartbeat.interval.ms = 5000"})
+    public void consumerListener100(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
+        try {
+            System.out.printf("consumerListener100:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            Thread.sleep(1000*1);
+            ack.acknowledge();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }*/
+
+    /**
+     * 并发消费
+     * max.poll.interval.ms 向 kafka broker poll offset 的时间间隔最大不能超过10分钟
+     * @param record
+     * @param ack
+     * @throws InterruptedException
+     */
+    @KafkaListener(id="103",groupId="test-group-02", topics = TopicConst.PAY_TOPICB20,concurrency = "20",properties= {"max.poll.interval.ms = 600000","session.timeout.ms = 15000","heartbeat.interval.ms = 5000"})
+    public void consumerListener103(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
+        try {
+            System.out.printf("consumerListener103:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+
+            /**
+             * 多线程累计计数
+             */
+            synchronized (TestConsumer.class){
+                ++count;
+                System.out.println(Thread.currentThread().getName()+":count-->"+count);
+            }
+            Thread.sleep(1000*1);
+            ack.acknowledge();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /*@KafkaListener(id="101",groupId="test-group-01", topics = TopicConst.PAY_TOPIC20)
+    public void consumerListener101(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
+        try {
+            System.out.printf("consumerListener101:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            //Thread.sleep(1000*1);
+            ack.acknowledge();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }*/
+
+    /*@KafkaListener(id="010",groupId="test-group-01", topics = TopicConst.PAY_TOPIC2)
+    public void consumerListener2(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
         try {
             System.out.printf("test-group-01:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
             ack.acknowledge();
@@ -65,6 +130,17 @@ public class TestConsumer {
         }
 
     }
+
+    @KafkaListener(id="08",groupId="test-group-01", topics = TopicConst.PAY_TOPIC)
+    public void consumerListener(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
+        try {
+            System.out.printf("test-group-01:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            ack.acknowledge();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }*/
 
     /***
      * 手动为消费 指定消费对应的分区 assign方式
@@ -97,16 +173,15 @@ public class TestConsumer {
         }
     }*/
 
-    /*@KafkaListener(id="011",groupId="test-group-01", topics = "topic_06",concurrency = "2")
+    /*@KafkaListener(id="011",groupId="test-group-01", topics = "topic_03",concurrency = "20")
     public void consumerListener011(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
-
             System.out.printf("test-group-01:topic_06--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
             //手动提交
+            Thread.sleep(1000);
             ack.acknowledge();
         } catch (Exception e) {
-
             e.printStackTrace();
         }
 

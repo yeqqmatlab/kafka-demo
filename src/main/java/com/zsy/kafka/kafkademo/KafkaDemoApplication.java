@@ -15,14 +15,22 @@ public class KafkaDemoApplication {
         ApplicationContext applicationContext = SpringApplication.run(KafkaDemoApplication.class, args);
 
         MessageProducer producer = applicationContext.getBean(MessageProducer.class);
-        while (true){
+
+        for (int i = 0; i < 10000; i++) {
+            Message message = new Message();
+            message.setFee(ToolsUtil.getRandFloat());
+            message.setOrderCode(ToolsUtil.getNextCode());
+            message.setSendTime(System.currentTimeMillis());
+            producer.send(message);
+        }
+        /*while (true){
             Message message = new Message();
             message.setFee(ToolsUtil.getRandFloat());
             message.setOrderCode(ToolsUtil.getNextCode());
             message.setSendTime(System.currentTimeMillis());
             producer.send(message);
 
-        }
+        }*/
     }
 
 }
