@@ -4,9 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.zsy.kafka.kafkademo.message.Message;
 import com.zsy.kafka.kafkademo.message.MsgObj;
 import com.zsy.kafka.kafkademo.topic.TopicConst;
+import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.TopicPartition;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.listener.ConsumerAwareListenerErrorHandler;
+import org.springframework.kafka.listener.ListenerExecutionFailedException;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
@@ -14,6 +20,9 @@ import org.slf4j.LoggerFactory;
 
 @Component
 public class TestConsumer {
+
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
 
     private static Logger logger = LoggerFactory.getLogger(TestConsumer.class);
 
@@ -88,14 +97,14 @@ public class TestConsumer {
      * @param ack
      * @throws InterruptedException
      */
-    @KafkaListener(id="103",groupId="test-group-02", topics = TopicConst.PAY_TOPICB20,concurrency = "20",properties= {"max.poll.interval.ms = 600000","session.timeout.ms = 15000","heartbeat.interval.ms = 5000"})
+    /*@KafkaListener(id="103",groupId="test-group-02", topics = TopicConst.PAY_TOPICB20,concurrency = "20",properties= {"max.poll.interval.ms = 600000","session.timeout.ms = 15000","heartbeat.interval.ms = 5000"})
     public void consumerListener103(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
         try {
             System.out.printf("consumerListener103:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
 
-            /**
+            *//**
              * 多线程累计计数
-             */
+             *//*
             synchronized (TestConsumer.class){
                 ++count;
                 System.out.println(Thread.currentThread().getName()+":count-->"+count);
@@ -106,7 +115,7 @@ public class TestConsumer {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     /*@KafkaListener(id="101",groupId="test-group-01", topics = TopicConst.PAY_TOPIC20)
     public void consumerListener101(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
@@ -148,18 +157,38 @@ public class TestConsumer {
      * @param record
      * @param ack
      */
-    /*@KafkaListener(id="010", topicPartitions = {@TopicPartition(topic = "topic_03",partitions = {"1"})},groupId = "test-group-02")
+    @KafkaListener(id="010", groupId="test-group-02", topics = TopicConst.PAY_TOPIC,errorHandler="consumerAwareErrorHandler")
     public void consumerListener010(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
-        try {
-            //int k = 1/0;
+//        try {
+//            Thread.sleep(100);
             System.out.printf("010test-group-02:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            String message = (String) record.value();
+            Message msg = JSON.parseObject(message, Message.class);
+            Integer fee = msg.getFee();
+            int k = 1 / fee;
+            System.out.println("fee-->"+fee);
             ack.acknowledge();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            System.out.printf("Exception--010test-group-02:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+//            //kafkaTemplate.send(TopicConst.PAY_TOPIC_FAILURE,record.value());
+//            e.printStackTrace();
+//        }
+    }
 
-    }*/
+    @Bean
+    public ConsumerAwareListenerErrorHandler consumerAwareErrorHandler() {
+
+        return new ConsumerAwareListenerErrorHandler() {
+            @Override
+            public Object handleError(org.springframework.messaging.Message<?> message, ListenerExecutionFailedException exception, Consumer<?, ?> consumer) {
+                logger.info("consumerAwareErrorHandler receive : "+message.getPayload().toString());
+                return null;
+            }
+        };
+    }
+
+
 
     /*@KafkaListener(id="013", topicPartitions = {@TopicPartition(topic = "topic_03",partitions = {"0","2","3","4"})},groupId = "test-group-02")
     public void consumerListener013(ConsumerRecord<?, ?> record, Acknowledgment ack){

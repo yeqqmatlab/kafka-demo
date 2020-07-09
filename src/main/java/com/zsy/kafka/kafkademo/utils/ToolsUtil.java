@@ -9,9 +9,9 @@ public class ToolsUtil {
         return UUID.randomUUID().toString();
     }
 
-    public synchronized static Float getRandFloat() {
+    public synchronized static Integer getRandFloat() {
         Random rand = new Random();
-        float fee = rand.nextFloat()*100;
+        Integer fee = rand.nextInt()*100;
         return fee;
     }
 }

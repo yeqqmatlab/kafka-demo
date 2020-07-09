@@ -4,7 +4,7 @@ public class Message {
 
     private String orderCode;
 
-    private Float fee;
+    private Integer fee;
 
     private Long sendTime;
 
@@ -16,11 +16,11 @@ public class Message {
         this.orderCode = orderCode;
     }
 
-    public Float getFee() {
+    public Integer getFee() {
         return fee;
     }
 
-    public void setFee(Float fee) {
+    public void setFee(Integer fee) {
         this.fee = fee;
     }
 

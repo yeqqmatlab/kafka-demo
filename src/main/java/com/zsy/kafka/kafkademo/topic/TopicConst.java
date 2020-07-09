@@ -4,6 +4,8 @@ public class TopicConst {
 
     public static final String PAY_TOPIC = "payTopic";
 
+    public static final String PAY_TOPIC_FAILURE = "payTopicFailure";
+
     public static final String PAY_TOPIC2 = "payTopic2";
 
     public static final String PAY_TOPIC3 = "payTopic3";
