@@ -7,44 +7,46 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import java.util.concurrent.ExecutionException;
+
 @SpringBootApplication
 public class KafkaDemoApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
 
         ApplicationContext applicationContext = SpringApplication.run(KafkaDemoApplication.class, args);
 
         MessageProducer producer = applicationContext.getBean(MessageProducer.class);
 
-        for (int i = 0; i < 500; i++) {
+        /*for (int i = 0; i < 500; i++) {
             Message message = new Message();
             message.setFee(ToolsUtil.getRandFloat());
             message.setOrderCode(ToolsUtil.getNextCode());
             message.setSendTime(System.currentTimeMillis());
             producer.send(message);
-        }
-        for (int i = 0; i < 60; i++) {
+        }*/
+        /*for (int i = 0; i < 100000; i++) {
             Message message = new Message();
-            message.setFee(0);
+            message.setFee(2);
             message.setOrderCode(ToolsUtil.getNextCode());
             message.setSendTime(System.currentTimeMillis());
             producer.send(message);
-        }
-        for (int i = 0; i < 500; i++) {
+        }*/
+        /*for (int i = 0; i < 50000; i++) {
             Message message = new Message();
             message.setFee(ToolsUtil.getRandFloat());
             message.setOrderCode(ToolsUtil.getNextCode());
             message.setSendTime(System.currentTimeMillis());
             producer.send(message);
-        }
+        }*/
 
         /*while (true){
+            Thread.sleep(500);
             Message message = new Message();
-            message.setFee(ToolsUtil.getRandFloat());
+            message.setFee(1);
             message.setOrderCode(ToolsUtil.getNextCode());
             message.setSendTime(System.currentTimeMillis());
             producer.send(message);
-
         }*/
     }
 

@@ -7,7 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
+
+import java.util.concurrent.ExecutionException;
 
 @Component
 public class MessageProducer {
@@ -17,9 +22,32 @@ public class MessageProducer {
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
-    public void send(Message payMessage) {
+    public void send(Message payMessage) throws ExecutionException, InterruptedException {
         String msg = JSON.toJSONString(payMessage);
-        kafkaTemplate.send(TopicConst.PAY_TOPIC, msg);
-        //logger.info("messageProducer is: " + msg );
+        /**
+         * 异步发送消息
+         */
+        String msgStr = "java python spark hadoop hello";
+        kafkaTemplate.send(TopicConst.TOPIC_KAFKA, msgStr);
+        logger.info("messageProducer is: " + msgStr );
+
+        /**
+         * 同步发送消息
+         */
+        //Object o = kafkaTemplate.send(TopicConst.PAY_TOPIC, msg).get();
+
+        /*ListenableFuture send = kafkaTemplate.send(TopicConst.PAY_TOPIC, msg);
+        send.addCallback(new ListenableFutureCallback<SendResult<String, Message>>() {
+            @Override
+            public void onFailure(Throwable ex) {
+                ex.printStackTrace();
+            }
+
+            @Override
+            public void onSuccess(SendResult<String, Message> result) {
+                System.out.println("1 messageProducer is: "+result.getProducerRecord());
+                System.out.println("2 messageProducer is: "+result.getRecordMetadata());
+            }
+        });*/
     }
 }

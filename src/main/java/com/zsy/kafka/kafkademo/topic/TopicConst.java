@@ -16,5 +16,7 @@ public class TopicConst {
 
     public static final String PAY_TOPICB20 = "payTopicB20";
 
-    public static final String TOPIC_01 = "topic_01";
+    public static final String TOPIC_06 = "topic_06";
+
+    public static final String TOPIC_KAFKA = "test_group_id";
 }

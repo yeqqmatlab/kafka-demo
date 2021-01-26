@@ -28,7 +28,7 @@ public class TestConsumer {
 
     public  int count = 0;
 
-    /*@KafkaListener(id="001", groupId="test-group-01",topics = "topic_01")
+   /* @KafkaListener(id="001", groupId="test-group-01",topics = "topic_05")
     public void listenTestGroup01Topic01 (ConsumerRecord<?, ?> record) throws Exception {
         //int i = 1 / 0;
         System.out.printf("test-group-01:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
@@ -66,17 +66,17 @@ public class TestConsumer {
     /**
      * 手动提交offset ,出现异常,offset不提交,消息不会丢失。
      */
-    /*@KafkaListener(id="009",groupId="test-group-01", topics = TopicConst.PAY_TOPIC3)
+    @KafkaListener(id="009",groupId="test-group-06", topics = "test_group_id")
     public void consumerListener3(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
         try {
             System.out.printf("test-group-01:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
             ack.acknowledge();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }*/
+    }
 
     /*@KafkaListener(id="100",groupId="test-group-01", topics = TopicConst.PAY_TOPIC20,concurrency = "20",properties= {"max.poll.interval.ms = 600000","session.timeout.ms = 15000","heartbeat.interval.ms = 5000"})
     public void consumerListener100(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
@@ -138,9 +138,9 @@ public class TestConsumer {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
-    @KafkaListener(id="08",groupId="test-group-01", topics = TopicConst.PAY_TOPIC)
+    /*@KafkaListener(id="08",groupId="test-group-01", topics = TopicConst.PAY_TOPIC)
     public void consumerListener(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
         try {
             System.out.printf("test-group-01:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
@@ -157,11 +157,11 @@ public class TestConsumer {
      * @param record
      * @param ack
      */
-    @KafkaListener(id="010", groupId="test-group-02", topics = TopicConst.PAY_TOPIC,errorHandler="consumerAwareErrorHandler")
+    /*@KafkaListener(id="010", groupId="test-group-01", topics = TopicConst.PAY_TOPIC20,concurrency = "20",errorHandler="consumerAwareErrorHandler")
     public void consumerListener010(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
-//        try {
-//            Thread.sleep(100);
+        try {
+            //Thread.sleep(100);
             System.out.printf("010test-group-02:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
             String message = (String) record.value();
             Message msg = JSON.parseObject(message, Message.class);
@@ -169,14 +169,14 @@ public class TestConsumer {
             int k = 1 / fee;
             System.out.println("fee-->"+fee);
             ack.acknowledge();
-//        } catch (Exception e) {
-//            System.out.printf("Exception--010test-group-02:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
-//            //kafkaTemplate.send(TopicConst.PAY_TOPIC_FAILURE,record.value());
-//            e.printStackTrace();
-//        }
-    }
+        } catch (Exception e) {
+            System.out.printf("Exception--010test-group-02:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            //kafkaTemplate.send(TopicConst.PAY_TOPIC_FAILURE,record.value());
+            e.printStackTrace();
+        }
+    }*/
 
-    @Bean
+    /*@Bean
     public ConsumerAwareListenerErrorHandler consumerAwareErrorHandler() {
 
         return new ConsumerAwareListenerErrorHandler() {
@@ -186,7 +186,7 @@ public class TestConsumer {
                 return null;
             }
         };
-    }
+    }*/
 
 
 
