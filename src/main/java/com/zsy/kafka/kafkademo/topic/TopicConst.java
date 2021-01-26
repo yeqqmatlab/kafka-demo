@@ -6,17 +6,9 @@ public class TopicConst {
 
     public static final String PAY_TOPIC_FAILURE = "payTopicFailure";
 
-    public static final String PAY_TOPIC2 = "payTopic2";
+    public static final String PAY_TOPIC_A = "pay-topic-a";
 
-    public static final String PAY_TOPIC3 = "payTopic3";
-
-    public static final String PAY_TOPIC20 = "payTopic20";
-
-    public static final String PAY_TOPICA20 = "payTopicA20";
-
-    public static final String PAY_TOPICB20 = "payTopicB20";
-
-    public static final String TOPIC_06 = "topic_06";
+    public static final String PAY_TOPIC_B = "pay-topic-b";
 
     public static final String TOPIC_KAFKA = "test_group_id";
 }
