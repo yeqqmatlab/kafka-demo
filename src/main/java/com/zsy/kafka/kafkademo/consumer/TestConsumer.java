@@ -202,38 +202,34 @@ public class TestConsumer {
         }
     }*/
 
-    /*@KafkaListener(id="011",groupId="test-group-01", topics = "topic_03",concurrency = "20")
+    @KafkaListener(id="011",groupId="test-group-02", topics = "topic_06")
     public void consumerListener011(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
             System.out.printf("test-group-01:topic_06--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
             //手动提交
-            Thread.sleep(1000);
             ack.acknowledge();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }*/
+    }
 
-   /* @KafkaListener(groupId="test-group-02", topics = "topic_07")
+    @KafkaListener(id = "test_001",groupId="test-group-02", topics = "topic_07", containerFactory = "ackContainerFactory")
     public void consumerListener012(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
-            //int k = 1/0;
             System.out.printf("test-group-02:topic_07--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
             String value = (String)record.value();
             System.out.println("value--->"+value);
-            //Integer m = Integer.valueOf(value);
-
             ack.acknowledge();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }*/
+    }
 
-    @KafkaListener(id = "test01", groupId="pay-group-01", topicPattern = "pay-topic.*")
+    /*@KafkaListener(id = "test01", groupId="pay-group-01", topicPattern = "pay-topic.*")
     public void consumerListener016(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
@@ -244,7 +240,7 @@ public class TestConsumer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /*@KafkaListener(id = "test02", groupId="pay-group-01", topicPattern = "pay-topic.*")
     public void consumerListener017(ConsumerRecord<?, ?> record, Acknowledgment ack){
