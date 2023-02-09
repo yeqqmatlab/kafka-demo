@@ -202,7 +202,7 @@ public class TestConsumer {
         }
     }*/
 
-    @KafkaListener(id="011",groupId="test-group-02", topics = "topic_06")
+    @KafkaListener(id="011",groupId="test-group-02", topics = "kafkaTest")
     public void consumerListener011(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
@@ -215,7 +215,7 @@ public class TestConsumer {
 
     }
 
-    @KafkaListener(id = "test_001",groupId="test-group-02", topics = "topic_07", containerFactory = "ackContainerFactory")
+/*    @KafkaListener(id = "test_001",groupId="test-group-02", topics = "topic_07", containerFactory = "ackContainerFactory")
     public void consumerListener012(ConsumerRecord<?, ?> record, Acknowledgment ack){
 
         try {
@@ -227,7 +227,7 @@ public class TestConsumer {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     /*@KafkaListener(id = "test01", groupId="pay-group-01", topicPattern = "pay-topic.*")
     public void consumerListener016(ConsumerRecord<?, ?> record, Acknowledgment ack){

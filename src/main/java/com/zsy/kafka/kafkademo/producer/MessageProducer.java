@@ -27,11 +27,11 @@ public class MessageProducer {
         /**
          * 异步发送消息
          */
-        String msgStr = "java python spark hadoop";
+//        String msgStr = "java python spark hadoop";
         kafkaTemplate.send(TopicConst.PAY_TOPIC_A, msg);
-        kafkaTemplate.send(TopicConst.PAY_TOPIC_B, msgStr);
+//        kafkaTemplate.send(TopicConst.PAY_TOPIC_B, msgStr);
         logger.info("messageProducer is: " + msg );
-        logger.info("messageProducer is: " + msgStr );
+//        logger.info("messageProducer is: " + msgStr );
 
         /**
          * 同步发送消息

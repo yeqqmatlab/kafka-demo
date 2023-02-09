@@ -6,7 +6,7 @@ public class TopicConst {
 
     public static final String PAY_TOPIC_FAILURE = "payTopicFailure";
 
-    public static final String PAY_TOPIC_A = "pay-topic-a";
+    public static final String PAY_TOPIC_A = "kafkaTest";
 
     public static final String PAY_TOPIC_B = "pay-topic-b";
 
