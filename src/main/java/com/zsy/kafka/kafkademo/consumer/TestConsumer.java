@@ -1,8 +1,11 @@
 package com.zsy.kafka.kafkademo.consumer;
 
 import com.alibaba.fastjson.JSON;
+import com.nrts.iscs.rtdb.api.RtdbVariant;
 import com.zsy.kafka.kafkademo.message.Message;
 import com.zsy.kafka.kafkademo.message.MsgObj;
+import com.zsy.kafka.kafkademo.rtdb.RtdbClient;
+import com.zsy.kafka.kafkademo.rtdb.RtdbRecord;
 import com.zsy.kafka.kafkademo.topic.TopicConst;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -17,6 +20,10 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class TestConsumer {
@@ -207,6 +214,16 @@ public class TestConsumer {
 
         try {
             System.out.printf("test-group-01:topic_06--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+
+            RtdbRecord vo = new RtdbRecord();
+            vo.setTableName("test");
+            vo.setStrCond("LNK_001");
+//            vo.setTableFieldKeys(Arrays.asList("des"));
+//            List<RtdbVariant> list = new ArrayList<>();
+            RtdbVariant rtdbVariant = new RtdbVariant("test");
+            vo.addTableFiled("des",rtdbVariant);
+            RtdbClient.updateTableRecord(1,vo);
+
             //手动提交
             ack.acknowledge();
         } catch (Exception e) {
