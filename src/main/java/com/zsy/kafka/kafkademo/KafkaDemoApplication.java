@@ -18,7 +18,7 @@ public class KafkaDemoApplication {
 
         MessageProducer producer = applicationContext.getBean(MessageProducer.class);
 
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 50; i++) {
             Message message = new Message();
             message.setFee(ToolsUtil.getRandFloat());
             message.setOrderCode(ToolsUtil.getNextCode());

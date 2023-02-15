@@ -222,7 +222,7 @@ public class RtdbClient {
                 domainId,
                 param.getTableName(),
                 param.getCondition(),
-                null,//param.getFieldKeys(),
+                param.getFieldKeys(),
                 datas,
                 pageRows,
                 totalRows,
@@ -522,14 +522,15 @@ public class RtdbClient {
     }
 
     public static void main(String[] args) throws IOException {
-        RtdbQueryParam rtdbQueryParam = new RtdbQueryParam("ilinkage");
-        rtdbQueryParam.setIndex(1);
-        rtdbQueryParam.setPageSize(10);
-        rtdbQueryParam.setCondition("linkid='LNK_001'");
-        //rtdbQueryParam.setFieldKeys(Arrays.asList("des"));
-        rtdbQueryParam.setDomainId(1);
-        List<RtdbVariant> list = queryTblRecord(1, rtdbQueryParam);
-        System.out.println("-->");
+
+//        RtdbQueryParam rtdbQueryParam = new RtdbQueryParam("linkage");
+//        rtdbQueryParam.setIndex(0);
+//        rtdbQueryParam.setPageSize(10);
+//        rtdbQueryParam.setCondition("linkage_id='LNK_001'");
+//        rtdbQueryParam.setFieldKeys(Arrays.asList("des"));
+//        rtdbQueryParam.setDomainId(1);
+//        List<RtdbVariant> list = queryTblRecord(1, rtdbQueryParam);
+//        System.out.println("-->");
 //
 //        Map map1 = RtdbClient.queryNodeRecord("dgj:dgj:PSCADA:1500KX_214:Imax++", Arrays.asList("ai_value", "di_value", "acc_value"), Map.class);
 //        System.out.println(JSON.toJSONString(map1));
@@ -541,5 +542,67 @@ public class RtdbClient {
 //        });
 //        System.out.println("========================================");
 //        System.in.read();
+
+//        System.out.println(queryNodeAttr("dl1:sl1:BAS:dl6192:i1RunTime.ai_value"));
+//
+//// list
+//        RtdbQueryParam rtdbQueryParam = new RtdbQueryParam();
+//        rtdbQueryParam.setDomainId(1);
+//        rtdbQueryParam.setTableName("fes_group");
+//        rtdbQueryParam.setCondition("group_label='test01'");
+//        rtdbQueryParam.setFieldKeys(Arrays.asList("group_label",
+//                "group_tag",
+//                "group_id",
+//                "domain_id",
+//                "station_id",
+//                "pro_system_id",
+//                "group_desc",
+//                "run_mode",
+//                "redundancy_port",
+//                "cli_tool_port",
+//                "para3",
+//                "para4",
+//                "crc32_code"));
+//        rtdbQueryParam.setIndex(0);
+//        rtdbQueryParam.setPageSize(1);
+//        List<Map> list = listTblRecord(1, rtdbQueryParam, Map.class);
+//        System.out.println("");
+//
+//// add
+//        RtdbRecord vo = new RtdbRecord();
+//        vo.setTableName("fes_group");
+//        vo.setTableFieldKeys(Arrays.asList(
+//                "group_label", "group_tag", "group_id", "domain_id",
+//                "station_id", "pro_system_id", "group_desc", "run_mode",
+//                "redundancy_port", "cli_tool_port", "para3", "para4",
+//                "crc32_code"
+//        ));
+//        vo.setTableFieldVals(Arrays.asList(
+//                new RtdbVariant("test01"), new RtdbVariant("test01"), new RtdbVariant(876), new RtdbVariant(1),
+//                new RtdbVariant(1), new RtdbVariant(1), new RtdbVariant("test01"), new RtdbVariant(2),
+//                new RtdbVariant(8888), new RtdbVariant(7777), new RtdbVariant("par333"), new RtdbVariant("par444"),
+//                new RtdbVariant(3467827869L)
+//        ));
+//        insertTableRecord(1, vo);
+//
+//// update
+//        RtdbRecord vo2 = new RtdbRecord();
+//        vo2.setTableName("fes_group");
+//        vo2.setStrCond("group_label='test01'");
+//        vo2.setTableFieldKeys(Arrays.asList(
+//                "group_desc"
+//        ));
+//        vo2.setTableFieldVals(Arrays.asList(
+//                new RtdbVariant("test" + "009")
+//        ));
+//        updateTableRecord(1, vo2);
+
+// delete
+        RtdbQueryParam rtdbQueryParam2 = new RtdbQueryParam();
+        rtdbQueryParam2.setDomainId(1);
+        rtdbQueryParam2.setTableName("fes_group");
+        rtdbQueryParam2.setCondition("group_label='test01'");
+        deleteTableRecord(1, rtdbQueryParam2);
+
     }
 }
