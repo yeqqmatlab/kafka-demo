@@ -27,11 +27,8 @@ public class MessageProducer {
         /**
          * 异步发送消息
          */
-//        String msgStr = "java python spark hadoop";
         kafkaTemplate.send(TopicConst.PAY_TOPIC_A, msg);
-//        kafkaTemplate.send(TopicConst.PAY_TOPIC_B, msgStr);
         logger.info("messageProducer is: " + msg );
-//        logger.info("messageProducer is: " + msgStr );
 
         /**
          * 同步发送消息
@@ -52,4 +49,30 @@ public class MessageProducer {
             }
         });*/
     }
+
+    /**
+     *
+     * @param topic
+     * @param msg
+     * @throws ExecutionException
+     */
+    public void send(String topic,String msg) throws ExecutionException{
+
+        kafkaTemplate.send(topic, msg);
+        logger.info("messageProducer is: " + msg );
+    }
+
+    /**
+     *
+     * @param topic
+     * @param partition
+     * @param msg
+     * @throws ExecutionException
+     */
+    public void send(String topic,Integer partition,String msg) throws ExecutionException{
+
+        kafkaTemplate.send(topic, partition,null, msg);
+        logger.info("messageProducer is: " + msg );
+    }
+
 }

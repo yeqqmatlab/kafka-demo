@@ -12,17 +12,16 @@ import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 import java.util.Arrays;
 
 @Component
 public class MessageConsumer {
 
-    @Autowired
-    private KafkaTemplate kafkaTemplate;
 
     private static Logger logger = LoggerFactory.getLogger(MessageConsumer.class);
 
-    public  int count = 0;
+
 
    /* @KafkaListener(id="001", groupId="test-group-01",topics = "topic_05")
     public void listenTestGroup01Topic01 (ConsumerRecord<?, ?> record) throws Exception {
@@ -198,42 +197,35 @@ public class MessageConsumer {
         }
     }*/
 
-    @KafkaListener(id="011",groupId="test-group-02", topics = "kafkaTest")
-    public void consumerListener011(ConsumerRecord<?, ?> record, Acknowledgment ack){
-
-        try {
-            System.out.printf("test-group-01:topic_06--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
-
+//    @KafkaListener(id="011",groupId="test-group-02", topics = "kafkaTest")
+//    public void consumerListener011(ConsumerRecord<?, ?> record, Acknowledgment ack){
+//
+//        try {
+//            System.out.printf("test-group-01:topic_06--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+//
 //            RtdbRecord vo = new RtdbRecord();
-//            vo.setTableName("test");
-//            vo.setStrCond("LNK_001");
-//            RtdbVariant rtdbVariant = new RtdbVariant("test");
-//            vo.addTableFiled("des",rtdbVariant);
-//            RtdbClient.updateTableRecord(1,vo);
-
-            RtdbRecord vo = new RtdbRecord();
-            vo.setTableName("fes_group");
-            vo.setTableFieldKeys(Arrays.asList(
-                    "group_label", "group_tag", "group_id", "domain_id",
-                    "station_id", "pro_system_id", "group_desc", "run_mode",
-                    "redundancy_port", "cli_tool_port", "para3", "para4",
-                    "crc32_code"
-            ));
-            vo.setTableFieldVals(Arrays.asList(
-                    new RtdbVariant("test01"), new RtdbVariant("test01"), new RtdbVariant(876), new RtdbVariant(1),
-                    new RtdbVariant(1), new RtdbVariant(1), new RtdbVariant("test01"), new RtdbVariant(2),
-                    new RtdbVariant(8888), new RtdbVariant(7777), new RtdbVariant("par333"), new RtdbVariant("par444"),
-                    new RtdbVariant(3467827869L)
-            ));
-            RtdbClient.insertTableRecord(1, vo);
-
-            //手动提交
-            ack.acknowledge();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+//            vo.setTableName("fes_group");
+//            vo.setTableFieldKeys(Arrays.asList(
+//                    "group_label", "group_tag", "group_id", "domain_id",
+//                    "station_id", "pro_system_id", "group_desc", "run_mode",
+//                    "redundancy_port", "cli_tool_port", "para3", "para4",
+//                    "crc32_code"
+//            ));
+//            vo.setTableFieldVals(Arrays.asList(
+//                    new RtdbVariant("test01"), new RtdbVariant("test01"), new RtdbVariant(876), new RtdbVariant(1),
+//                    new RtdbVariant(1), new RtdbVariant(1), new RtdbVariant("test01"), new RtdbVariant(2),
+//                    new RtdbVariant(8888), new RtdbVariant(7777), new RtdbVariant("par333"), new RtdbVariant("par444"),
+//                    new RtdbVariant(3467827869L)
+//            ));
+//            RtdbClient.insertTableRecord(1, vo);
+//
+//            //手动提交
+//            ack.acknowledge();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 /*    @KafkaListener(id = "test_001",groupId="test-group-02", topics = "topic_07", containerFactory = "ackContainerFactory")
     public void consumerListener012(ConsumerRecord<?, ?> record, Acknowledgment ack){
