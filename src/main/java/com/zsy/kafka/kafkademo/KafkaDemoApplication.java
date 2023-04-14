@@ -85,14 +85,14 @@ public class KafkaDemoApplication {
 
 
 
-            producer.send(TopicConst.TOPIC_L1_SYS_EMS,0, msg);
-            producer.send(TopicConst.TOPIC_L1_SYS_EMS,1, msg);
-            producer.send(TopicConst.TOPIC_L1_SYS_EMS,2, msg);
-            producer.send(TopicConst.TOPIC_L1_SYS_EMS,3, msg);
-            producer.send(TopicConst.TOPIC_L1_SYS_EMS,4, msg);
-            producer.send(TopicConst.TOPIC_L1_SYS_EMS,5, msg);
-            producer.send(TopicConst.TOPIC_L1_SYS_EMS,6, msg);
-            producer.send(TopicConst.TOPIC_L1_SYS_EMS,7, msg);
+//            producer.send(TopicConst.TOPIC_L1_SYS_EMS,0, msg);
+//            producer.send(TopicConst.TOPIC_L1_SYS_EMS,1, msg);
+//            producer.send(TopicConst.TOPIC_L1_SYS_EMS,2, msg);
+//            producer.send(TopicConst.TOPIC_L1_SYS_EMS,3, msg);
+//            producer.send(TopicConst.TOPIC_L1_SYS_EMS,4, msg);
+//            producer.send(TopicConst.TOPIC_L1_SYS_EMS,5, msg);
+//            producer.send(TopicConst.TOPIC_L1_SYS_EMS,6, msg);
+//            producer.send(TopicConst.TOPIC_L1_SYS_EMS,7, msg);
 //
 //            producer.send(TopicConst.TOPIC_L2_SYS_EMS,0, msg);
 //            producer.send(TopicConst.TOPIC_L2_SYS_EMS,1, msg);

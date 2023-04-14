@@ -1,8 +1,6 @@
 package com.zsy.kafka.kafkademo.consumer;
 
-import com.nrts.iscs.rtdb.api.RtdbVariant;
-import com.zsy.kafka.kafkademo.rtdb.RtdbClient;
-import com.zsy.kafka.kafkademo.rtdb.RtdbRecord;
+
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
