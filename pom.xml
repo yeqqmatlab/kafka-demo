@@ -74,6 +74,12 @@
             <version>2.1.11.RELEASE</version>
         </dependency>
 
+        <!-- SpringWebSocket依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
 
     </dependencies>
 

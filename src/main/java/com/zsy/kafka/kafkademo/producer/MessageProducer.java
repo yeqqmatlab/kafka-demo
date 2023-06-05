@@ -2,15 +2,12 @@ package com.zsy.kafka.kafkademo.producer;
 
 import com.alibaba.fastjson.JSON;
 import com.zsy.kafka.kafkademo.message.Message;
-import com.zsy.kafka.kafkademo.topic.TopicConst;
+import com.zsy.kafka.kafkademo.utils.topic.TopicConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.util.concurrent.ExecutionException;
 
@@ -27,7 +24,7 @@ public class MessageProducer {
         /**
          * 异步发送消息
          */
-        kafkaTemplate.send(TopicConst.PAY_TOPIC_A, msg);
+        kafkaTemplate.send(TopicConst.TOPIC_A, msg);
         logger.info("messageProducer is: " + msg );
 
         /**

@@ -1,6 +1,7 @@
 package com.zsy.kafka.kafkademo.consumer;
 
 
+import com.zsy.kafka.kafkademo.service.WebSocket;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -19,13 +20,15 @@ public class MessageConsumer {
 
     private static Logger logger = LoggerFactory.getLogger(MessageConsumer.class);
 
+    @Autowired
+    private WebSocket webSocket;
 
-
-   /* @KafkaListener(id="001", groupId="test-group-01",topics = "topic_05")
-    public void listenTestGroup01Topic01 (ConsumerRecord<?, ?> record) throws Exception {
-        //int i = 1 / 0;
-        System.out.printf("test-group-01:topic_01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
-    }*/
+//    @KafkaListener(id="001", groupId="test-group-01",topics = "topic-a")
+//    public void listenTestGroup01Topic01 (ConsumerRecord<?, ?> record) throws Exception {
+//
+//        System.out.printf("test-group-01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+//
+//    }
 
 /*    @KafkaListener(id="002",groupId="test-group-01",topics = "topic_03")
     public void listenTestGroup01Topic01B (ConsumerRecord<?, ?> record) throws Exception {
@@ -59,17 +62,17 @@ public class MessageConsumer {
     /**
      * 手动提交offset ,出现异常,offset不提交,消息不会丢失。
      */
-    /*@KafkaListener(id="009",groupId="test-group-06", topics = "test_group_id")
+    @KafkaListener(id="009",groupId="test-group-01", topics = "topic-a")
     public void consumerListener3(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
         try {
-            System.out.printf("test-group-01:"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
-            //Thread.sleep(1000);
+            System.out.printf("test-group-01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            webSocket.sendMessage(record.value().toString());
             ack.acknowledge();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }*/
+    }
 
     /*@KafkaListener(id="100",groupId="test-group-01", topics = TopicConst.PAY_TOPIC20,concurrency = "20",properties= {"max.poll.interval.ms = 600000","session.timeout.ms = 15000","heartbeat.interval.ms = 5000"})
     public void consumerListener100(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
