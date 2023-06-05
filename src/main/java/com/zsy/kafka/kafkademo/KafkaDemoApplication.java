@@ -25,10 +25,31 @@ public class KafkaDemoApplication {
 
         MessageProducer producer = applicationContext.getBean(MessageProducer.class);
 
-//        for (int i = 0; i < 100; i++) {
-//            Thread.sleep(500);
-//            producer.send(TopicConst.TOPIC_A, "java"+i);
+//        for (int i = 0; i < 50; i++) {
+//            Thread.sleep(1000*1);
+//            int[] arr = new int[6];
+//            arr[0] = ToolsUtil.getRandInt();
+//            arr[1] = ToolsUtil.getRandInt();
+//            arr[2] = ToolsUtil.getRandInt();
+//            arr[3] = ToolsUtil.getRandInt();
+//            arr[4] = ToolsUtil.getRandInt();
+//            arr[5] = ToolsUtil.getRandInt();
+//            String msg = JSON.toJSONString(arr);
+//            producer.send(TopicConst.TOPIC_A, msg);
 //        }
+
+        while (true){
+            Thread.sleep(1000*1);
+            int[] arr = new int[6];
+            arr[0] = ToolsUtil.getRandInt();
+            arr[1] = ToolsUtil.getRandInt();
+            arr[2] = ToolsUtil.getRandInt();
+            arr[3] = ToolsUtil.getRandInt();
+            arr[4] = ToolsUtil.getRandInt();
+            arr[5] = ToolsUtil.getRandInt();
+            String msg = JSON.toJSONString(arr);
+            producer.send(TopicConst.TOPIC_A, msg);
+        }
 
     }
 
