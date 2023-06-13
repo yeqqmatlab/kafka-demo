@@ -1,6 +1,10 @@
 package com.zsy.kafka.kafkademo.consumer;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.zsy.kafka.kafkademo.pojo.FeatureObj;
+import com.zsy.kafka.kafkademo.service.ApiService;
 import com.zsy.kafka.kafkademo.service.WebSocket;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class MessageConsumer {
@@ -22,6 +28,9 @@ public class MessageConsumer {
 
     @Autowired
     private WebSocket webSocket;
+
+    @Autowired
+    private ApiService apiService;
 
 //    @KafkaListener(id="001", groupId="test-group-01",topics = "topic-a")
 //    public void listenTestGroup01Topic01 (ConsumerRecord<?, ?> record) throws Exception {
@@ -67,6 +76,15 @@ public class MessageConsumer {
         try {
             System.out.printf("test-group-01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
             webSocket.sendMessage(record.value().toString());
+            String arrStr = record.value().toString();
+            String substring = arrStr.substring(1, arrStr.length() - 1);
+            Float[] floats = Stream.of(substring.split(",")).map(ov -> Float.valueOf(ov)).toArray(Float[]::new);
+            FeatureObj obj = new FeatureObj();
+            obj.setFeature(floats);
+            JSONObject predict = apiService.predict(obj);
+            Object predicted_label = predict.get("predicted_label");
+            System.out.println("predicted_label = " + predicted_label.toString());
+
             ack.acknowledge();
         } catch (Exception e) {
             e.printStackTrace();
