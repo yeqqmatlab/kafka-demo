@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.zsy.kafka.kafkademo.pojo.FeatureObj;
 import com.zsy.kafka.kafkademo.service.ApiService;
 import com.zsy.kafka.kafkademo.service.WebSocket;
+import org.apache.commons.lang.StringUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -74,17 +75,14 @@ public class MessageConsumer {
     @KafkaListener(id="009",groupId="test-group-01", topics = "topic-a")
     public void consumerListener3(ConsumerRecord<?, ?> record, Acknowledgment ack) throws InterruptedException {
         try {
-            System.out.printf("test-group-01--->"+"topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
-            webSocket.sendMessage(record.value().toString());
-            String arrStr = record.value().toString();
-            String substring = arrStr.substring(1, arrStr.length() - 1);
-            Float[] floats = Stream.of(substring.split(",")).map(ov -> Float.valueOf(ov)).toArray(Float[]::new);
-            FeatureObj obj = new FeatureObj();
-            obj.setFeature(floats);
-            JSONObject predict = apiService.predict(obj);
-            Object predicted_label = predict.get("predicted_label");
-            System.out.println("predicted_label = " + predicted_label.toString());
-
+            System.out.printf("topic = %s,partition = %s, offset = %d,key = %s, value = %s \n", record.topic(),record.partition(),record.offset(),record.key(),record.value());
+            FeatureObj featureObj = JSON.parseObject(String.valueOf(record.value()), FeatureObj.class);
+            JSONObject predict = apiService.predict(featureObj);
+            int predicted_label = (int)predict.get("predicted_label");
+            System.out.println("predicted_label = " + predicted_label);
+            featureObj.setLabel(predicted_label);
+            String msgObj = JSON.toJSONString(featureObj);
+            webSocket.sendMessage(msgObj);
             ack.acknowledge();
         } catch (Exception e) {
             e.printStackTrace();

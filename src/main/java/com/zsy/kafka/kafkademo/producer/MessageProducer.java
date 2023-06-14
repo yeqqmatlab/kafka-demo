@@ -53,10 +53,10 @@ public class MessageProducer {
      * @param msg
      * @throws ExecutionException
      */
-    public void send(String topic,String msg) throws ExecutionException{
+    public void send(String topic,Object msg) throws ExecutionException{
 
         kafkaTemplate.send(topic, msg);
-        logger.info("messageProducer is: " + msg );
+        logger.info("messageProducer is: " + msg.toString() );
     }
 
     /**
